@@ -46,9 +46,22 @@ One file, one prompt per spirit, one streaming request to Ollama's
 `/api/generate` endpoint (`temperature 0.9`, max ~220 tokens so answers
 stay séance-short). No conversation memory across runs, no framework.
 
+## Troubleshooting
+
+- `ollama: command not found` after a VM replacement: the binary lives
+  in `/usr/local/bin` (ephemeral) while the weights survive in
+  `~/.ollama/models`. Reinstall with the official script
+  (`curl -fsSL https://ollama.com/install.sh | sh`) — no weights need
+  re-downloading.
+- A system Ollama service holding `:11434` with an empty model list:
+  start your own server on another port and point the app at it:
+  `OLLAMA_HOST=127.0.0.1:11435 ollama serve`, then
+  `node seance.mjs --url http://localhost:11435` (or set
+  `SEANCE_OLLAMA_URL`).
+
 ## Files
 
 - `seance.mjs` — the whole app
+- `transcript.md` — real captured runs (not mock-ups)
 - `plan.md` — what it is, why, and the honest limits
-- `transcript.md` — a real captured run (not a mock-up)
-- `DEV-POST-DRAFT.md` — the Week 4 submission post draft
+- `demo-screenshot.png` — terminal image of the COBOL exchange
